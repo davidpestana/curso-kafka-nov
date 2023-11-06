@@ -7,6 +7,10 @@ stop: ## project stop
 client: ## lauch operational client
 	docker compose -f operations.yaml run --rm client
 
+cleanup: ## clean all data and containers
+	docker compose down --remove-orphans
+	docker compose -f operations.yaml run --rm client bash -c "rm -Rf /data/" 
+
 topic-create:  ## create a new topic
 	@read -p "Enter a topic name: " topic; \
 	read -p "Enter partition number: " partitions; \
@@ -47,6 +51,7 @@ group-describe: ## get a group description
 	@read -p "Enter a group name: " group; \
 	docker compose -f operations.yaml run --rm client bash -c \
 		"./bin/kafka-consumer-groups.sh --bootstrap-server $(bootstrap-server) --describe --group $$group"
+
 
 
 help: 
