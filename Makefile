@@ -1,11 +1,17 @@
-bootstrap-server = broker1:9092
+bootstrap-server = broker1:9092, broker2:9092, broker3:9092
 
 start: ## project start
 	docker compose up -d
+start-producers:
+	docker compose -f producers.yaml up
+
 stop: ## project stop
 	docker compose down
 client: ## lauch operational client
 	docker compose -f operations.yaml run --rm client
+
+client-node: ## lauch operational client for node projects
+	docker compose -f producers.yaml run --rm producer-1 bash
 
 cleanup: ## clean all data and containers
 	docker compose down --remove-orphans
@@ -41,7 +47,7 @@ consumer-create: ## create a console consumer connected to group and topic
 	@read -p "Enter a topic name: " topic; \
 	read -p "Enter a group name: " group; \
 	docker compose -f operations.yaml run --rm client bash -c \
-		"./bin/kafka-topics.sh --bootstrap-server $(bootstrap-server) --describe --topic $$topic --group $$group"
+		"./bin/kafka-console-consumer.sh --bootstrap-server $(bootstrap-server) --topic $$topic --group $$group"
 
 group-list: ## get a group list
 	docker compose -f operations.yaml run --rm client bash -c \
