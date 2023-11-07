@@ -3,23 +3,19 @@ const { Kafka } = require('kafkajs')
 
 const kafka = new Kafka({
     clientId: 'producer-de-prueba-en-node',
-    brokers: ['broker1:9092', 'broker2:9092', 'broker3:9092'],
+    brokers: ['localhost:29092'],
 })
 
 
 
 const producer = kafka.producer();
-const consumer = kafka.consumer();
-
 
 const sender =  async(value)  => {
     await producer.connect()
     let r = await producer.send({
         topic: 'prueba2',
         messages: [
-            { partition: 1, value: 'Hello KafkaJS user! ' + value },
-            { partition: 2, value: 'Hello KafkaJS user! ' + value },
-            { partition: 3, value: 'Hello KafkaJS user! ' + value },
+            { value: 'Hello KafkaJS user! ' + value },
         ],
     });
 
