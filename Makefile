@@ -1,4 +1,4 @@
-bootstrap-server = broker1:9092, broker2:9092, broker3:9092
+bootstrap-server = broker1:9092, broker2:9092, broker3:9092, broker4:9092
 
 start: ## project start
 	docker compose up -d

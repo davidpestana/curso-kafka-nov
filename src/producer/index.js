@@ -7,14 +7,19 @@ const kafka = new Kafka({
 })
 
 
+
 const producer = kafka.producer();
+const consumer = kafka.consumer();
+
 
 const sender =  async(value)  => {
     await producer.connect()
     let r = await producer.send({
         topic: 'prueba2',
         messages: [
-            { value: 'Hello KafkaJS user! ' + value },
+            { partition: 1, value: 'Hello KafkaJS user! ' + value },
+            { partition: 2, value: 'Hello KafkaJS user! ' + value },
+            { partition: 3, value: 'Hello KafkaJS user! ' + value },
         ],
     });
 
@@ -23,5 +28,9 @@ const sender =  async(value)  => {
     await producer.disconnect()
 }
 
+
+
 let counter = 0;
+
+
 setInterval(() => sender(counter++), 100);
