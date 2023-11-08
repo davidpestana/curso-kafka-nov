@@ -15,7 +15,7 @@ const sender =  async(value)  => {
     let r = await producer.send({
         topic: 'prueba2',
         messages: [
-            { value: 'Hello KafkaJS user! ' + value },
+            { value: 0x123433523fa },
         ],
     });
 

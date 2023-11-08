@@ -47,7 +47,7 @@ consumer-create: ## create a console consumer connected to group and topic
 	@read -p "Enter a topic name: " topic; \
 	read -p "Enter a group name: " group; \
 	docker compose -f operations.yaml run --rm client bash -c \
-		"./bin/kafka-console-consumer.sh --bootstrap-server $(bootstrap-server) --topic $$topic --group $$group"
+		"./bin/kafka-console-consumer.sh --bootstrap-server $(bootstrap-server) --topic $$topic --group $$group --from-beginning"
 
 group-list: ## get a group list
 	docker compose -f operations.yaml run --rm client bash -c \
